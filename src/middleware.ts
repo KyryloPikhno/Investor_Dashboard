@@ -1,0 +1,18 @@
+import { PATH, PUBLIC_PATHS } from "@/constants/common"
+import { NextRequest, NextResponse } from "next/server"
+
+export function middleware(req: NextRequest) {
+  const token = req.cookies.get("token")?.value
+  const pathname = req.nextUrl.pathname
+  const isPublic = PUBLIC_PATHS.includes(pathname)
+
+  if (!token && !isPublic) {
+    return NextResponse.redirect(new URL(PATH.LOGIN, req.url))
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|login).*)", "/"],
+}
