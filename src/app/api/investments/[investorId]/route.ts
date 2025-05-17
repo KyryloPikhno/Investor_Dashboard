@@ -1,9 +1,9 @@
 import prisma from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
-export async function GET(_: Request, { params }: { params: { investorId: string } }) {
+export async function GET(_: Request, context: { params: { investorId: string } }) {
   try {
-    const { investorId } = params
+    const { investorId } = await context.params
 
     const summary = await prisma.investorSummary.findUnique({
       where: { investor_id: investorId },
