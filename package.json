@@ -9,6 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
     "seed": "node --loader ts-node/esm prisma/seed.ts",
     "db:setup": "yarn prisma:generate && yarn prisma:migrate && yarn seed"
   },
