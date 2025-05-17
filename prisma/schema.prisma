@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Investment {
+  id                    String   @id @default(uuid())
+  investor_id           String
+  project_name          String
+  token_class           String
+  shares_owned          Int
+  market_value          Float
+  roi_percent           Float
+  next_distribution_date DateTime
+  created_at            DateTime @default(now())
+}
+
+model InvestorSummary {
+  investor_id           String   @id
+  total_invested_amount Float
+  portfolio_value       Float
+  distributions_received Float
+  outstanding_commitments Float
+}
