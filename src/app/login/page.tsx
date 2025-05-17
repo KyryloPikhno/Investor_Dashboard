@@ -1,7 +1,7 @@
 "use client"
 
 import InputField from "@/components/input-field"
-import { TOKEN_KEY } from "@/constants/common"
+import { INVESTOR_ID, TOKEN_KEY } from "@/constants/common"
 import { LoginFormType } from "@/types/common"
 import { loginValidationSchema } from "@/validations/login-validation-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -29,7 +29,7 @@ export default function LoginPage() {
     setToken(`fake-${data.email}-token-123`)
 
     // After setting the token, navigate to the Dashboard page.
-    router.push("/")
+    router.push(`/?investor-id=${INVESTOR_ID}`)
   }
 
   return (

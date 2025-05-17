@@ -1,20 +1,24 @@
 "use client"
 
-import { INVESTOR_ID } from "@/constants/common"
+import { INVESTOR_ID_QUERY_PARAM } from "@/constants/common"
 import { investmentsApi } from "@/lib/api-client"
 import { InvestorData } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
+import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function DashboardPage() {
   const [data, setData] = useState<InvestorData | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const searchParams = useSearchParams()
+
+  const investorId = searchParams.get(INVESTOR_ID_QUERY_PARAM) as string
 
   useEffect(() => {
     async function fetchInvestorData() {
       try {
-        const response = await investmentsApi.getById(INVESTOR_ID)
+        const response = await investmentsApi.getById(investorId)
         setData(response.data)
       } catch (err) {
         setError("Something went wrong. Please try again later.")
