@@ -1,16 +1,21 @@
 {
   "name": "investor-dashboard",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "seed": "node --loader ts-node/esm prisma/seed.ts",
+    "db:setup": "yarn prisma:generate && yarn prisma:migrate && yarn seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@prisma/client": "^6.8.2",
+    "axios": "^1.9.0",
     "lodash": "^4.17.21",
     "next": "15.3.2",
     "react": "^19.0.0",
@@ -38,7 +43,9 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "prettier": "^3.0.0",
+    "prisma": "^6.8.2",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "5.3"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
