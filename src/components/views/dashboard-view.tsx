@@ -1,16 +1,29 @@
 "use client"
 
-import { INVESTOR_ID_QUERY_PARAM, TABLE_HEADERS } from "@/constants/common"
+import SortableHeaderCell from "@/components/sortable-header-cell"
+import {
+  ColumnType,
+  HEADER_KEY_MAP,
+  INVESTOR_ID_QUERY_PARAM,
+  SORT,
+  TABLE_HEADERS,
+} from "@/constants/common"
 import { investmentsApi } from "@/lib/api-client"
-import { InvestorData } from "@/types/common"
+import { InvestorDataType } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function DashboardView() {
-  const [data, setData] = useState<InvestorData | null>(null)
+  const [data, setData] = useState<InvestorDataType | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [filters, setFilters] = useState({
+    sortDirection: SORT.ASC,
+    roiMin: SORT.ASC,
+    sortBy: "",
+  })
+
   const searchParams = useSearchParams()
 
   const investorId = searchParams.get(INVESTOR_ID_QUERY_PARAM) as string
@@ -18,9 +31,9 @@ export default function DashboardView() {
   useEffect(() => {
     async function fetchInvestorData() {
       try {
-        const response = await investmentsApi.getById(investorId)
+        const response = await investmentsApi.getById(investorId, filters)
         setData(response.data)
-      } catch (err) {
+      } catch {
         setError("Something went wrong. Please try again later.")
       } finally {
         setLoading(false)
@@ -28,13 +41,21 @@ export default function DashboardView() {
     }
 
     fetchInvestorData()
-  }, [])
+  }, [filters, investorId])
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>
   if (!data?.summary) return <p>No investor summary found.</p>
 
   const { summary, investments } = data
+
+  const toggleSort = (column: ColumnType) =>
+    setFilters((prev) => ({
+      ...prev,
+      sortBy: column,
+      sortDirection:
+        prev.sortBy === column && prev.sortDirection === SORT.ASC ? SORT.DESC : SORT.ASC,
+    }))
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
@@ -64,9 +85,13 @@ export default function DashboardView() {
             <thead>
               <tr>
                 {TABLE_HEADERS.map((header) => (
-                  <th key={header} className="border border-gray-300 px-4 py-2">
-                    {header}
-                  </th>
+                  <SortableHeaderCell
+                    key={header}
+                    header={header}
+                    filters={filters}
+                    toggleSort={toggleSort}
+                    dataKey={HEADER_KEY_MAP[header]}
+                  />
                 ))}
               </tr>
             </thead>
