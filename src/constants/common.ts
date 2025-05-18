@@ -20,12 +20,12 @@ export const INVESTOR_ID = "1234-5678"
 export const INVESTOR_ID_QUERY_PARAM = "investor-id"
 
 export const TABLE_HEADERS = [
-  { label: "Project Name", key: "project_name" },
-  { label: "Token Class", key: "token_class" },
-  { label: "Shares Owned", key: "shares_owned" },
-  { label: "Market Value", key: "market_value" },
-  { label: "ROI %", key: "roi_percent" },
-  { label: "Next Distribution Date", key: "next_distribution_date" },
+  { key: "project_name", label: "Project Name" },
+  { key: "token_class", label: "Token Class" },
+  { key: "shares_owned", label: "Shares Owned" },
+  { key: "market_value", label: "Market Value" },
+  { key: "roi_percent", label: "ROI %" },
+  { key: "next_distribution_date", label: "Next Distribution Date" },
 ] as const
 
 export const PUBLIC_PATHS = [PATH.LOGIN]
@@ -36,7 +36,7 @@ export const SORT = {
 }
 
 export const FILTER_INITIAL_STATE = {
-  sortDirection: SORT.ASC,
   roiMin: "",
   sortBy: "",
+  sortDirection: SORT.ASC,
 }

@@ -1,5 +1,9 @@
 "use client"
 
+import { AnimatePresence, motion } from "framer-motion"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+
 import Button from "@/components/button"
 import InvestorSummary from "@/components/investor-summary"
 import SortableHeaderCell from "@/components/sortable-header-cell"
@@ -15,9 +19,6 @@ import { investmentsApi } from "@/lib/api-client"
 import { InvestorDataType, StatusStateType } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
 import { getSortDirectionLabel } from "@/utils/get-sort-direction-label"
-import { AnimatePresence, motion } from "framer-motion"
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
 
 const tdClassName = "border border-black px-4 py-2"
 
@@ -50,7 +51,7 @@ export default function DashboardView() {
   if (status.loading) return <h2 className="font-bold p-8 w-full h-screen">Loading...</h2>
   if (status.error) return <h2 className="font-bold p-8 w-full h-screen">{status.error}</h2>
   if (!data?.summary)
-    return <h2 className="font-bold p-8 max-w-4xl mx-auto">No investor summary found.</h2>
+    return <h2 className="font-bold p-8 w-full h-screen">No investor summary found.</h2>
 
   const { summary, investments } = data
 
@@ -77,12 +78,12 @@ export default function DashboardView() {
           <AnimatePresence>
             {isResetFilter && (
               <motion.div
-                key="filter-panel"
+                animate={{ opacity: 1 }}
+                className="flex items-center gap-4"
                 exit={{ opacity: 0 }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                key="filter-panel"
                 transition={{ duration: 0.2 }}
-                className="flex items-center gap-4"
               >
                 <div className="font-medium">Filter:</div>
                 {filters.sortBy && (
@@ -94,9 +95,9 @@ export default function DashboardView() {
 
                 <div>
                   <Button
+                    onClick={() => setFilters(FILTER_INITIAL_STATE)}
                     type="button"
                     variant={ButtonVariant.Solid}
-                    onClick={() => setFilters(FILTER_INITIAL_STATE)}
                   >
                     Reset filter
                   </Button>
@@ -110,15 +111,15 @@ export default function DashboardView() {
           <p>No investments found.</p>
         ) : (
           <table className="w-full mb-16 table-auto border-collapse" role="table">
-            <caption className="sr-only">Investor's investments overview</caption>
+            <caption className="sr-only">Investor&apos;s investments overview</caption>
             <thead>
               <tr>
                 {TABLE_HEADERS.map(({ label, key }) => (
                   <SortableHeaderCell
-                    key={label}
                     dataKey={key}
-                    header={label}
                     filters={filters}
+                    header={label}
+                    key={label}
                     toggleSort={toggleSort}
                   />
                 ))}

@@ -1,14 +1,15 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import Cookies from "js-cookie"
+import { useRouter } from "next/navigation"
+import { FormProvider, useForm } from "react-hook-form"
+
 import Button from "@/components/button"
 import InputField from "@/components/input-field"
 import { INVESTOR_ID, INVESTOR_ID_QUERY_PARAM, TOKEN_KEY } from "@/constants/common"
 import { LoginFormType } from "@/types/common"
 import { loginValidationSchema } from "@/validations/login-validation-schema"
-import { zodResolver } from "@hookform/resolvers/zod"
-import Cookies from "js-cookie"
-import { useRouter } from "next/navigation"
-import { FormProvider, useForm } from "react-hook-form"
 
 export default function LoginView() {
   const router = useRouter()
@@ -35,12 +36,12 @@ export default function LoginView() {
   return (
     <FormProvider {...methods}>
       <form className="rounded w-full max-w-sm" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-2xl mb-6 text-center font-semibold">Login</h2>
+        <h2 className="text-2xl mb-6 text-center font-semibold">Login to see summary</h2>
 
         <InputField name="email" />
         <InputField name="password" />
 
-        <Button type="submit" loading={isSubmitting} disabled={isSubmitting}>
+        <Button disabled={isSubmitting} loading={isSubmitting} type="submit">
           Login
         </Button>
       </form>

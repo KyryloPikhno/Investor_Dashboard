@@ -1,6 +1,7 @@
+import { NextResponse } from "next/server"
+
 import { ColumnType, SORT } from "@/constants/common"
 import prisma from "@/lib/prisma"
-import { NextResponse } from "next/server"
 
 export async function GET(req: Request, { params }: { params: { investorId: string } }) {
   try {
@@ -36,15 +37,15 @@ export async function GET(req: Request, { params }: { params: { investorId: stri
     }
 
     const investments = await prisma.investment.findMany({
-      where: whereFilter,
       orderBy: Object.keys(orderBy).length > 0 ? orderBy : undefined,
+      where: whereFilter,
     })
 
     const summary = await prisma.investorSummary.findUnique({
       where: { investor_id: investorId },
     })
 
-    return NextResponse.json({ summary, investments })
+    return NextResponse.json({ investments, summary })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: "Server Error" }, { status: 500 })

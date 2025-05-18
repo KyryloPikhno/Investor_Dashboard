@@ -1,5 +1,6 @@
-import { PATH, PUBLIC_PATHS } from "@/constants/common"
 import { NextRequest, NextResponse } from "next/server"
+
+import { PATH, PUBLIC_PATHS } from "@/constants/common"
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value

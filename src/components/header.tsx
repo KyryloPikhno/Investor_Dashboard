@@ -1,7 +1,8 @@
-import Button from "@/components/button"
-import { ButtonVariant, PATH, TOKEN_KEY } from "@/constants/common"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
+
+import Button from "@/components/button"
+import { ButtonVariant, PATH, TOKEN_KEY } from "@/constants/common"
 
 export const Header = () => {
   const router = useRouter()
@@ -17,7 +18,7 @@ export const Header = () => {
 
       <div className="flex items-center gap-4">
         <div className="text-white">Username</div>
-        <Button variant={ButtonVariant.Outline} onClick={handleLogout}>
+        <Button onClick={handleLogout} variant={ButtonVariant.Outline}>
           Logout
         </Button>
       </div>

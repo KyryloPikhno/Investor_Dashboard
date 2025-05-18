@@ -1,9 +1,9 @@
+import { Investment, InvestorSummary } from "@prisma/client"
+import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react"
 import { z } from "zod"
 
 import { ButtonVariant, ColumnType } from "@/constants/common"
 import { loginValidationSchema } from "@/validations/login-validation-schema"
-import { Investment, InvestorSummary } from "@prisma/client"
-import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react"
 
 export type InputFieldProps = {
   name: string

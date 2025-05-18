@@ -1,9 +1,10 @@
 "use client"
 
-import { InputFieldProps } from "@/types/common"
 import _ from "lodash"
 import { useFormContext } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
+
+import { InputFieldProps } from "@/types/common"
 
 export default function InputField({ name }: InputFieldProps) {
   const {
@@ -16,7 +17,7 @@ export default function InputField({ name }: InputFieldProps) {
 
   return (
     <div className="mb-4 relative">
-      <label className="block mb-1 text-sm font-medium absolute -top-2.5 left-8 bg-white px-2">
+      <label className="rounded-full block mb-1 text-sm font-medium absolute -top-2.5 left-8 bg-white px-2">
         {label}
       </label>
 
