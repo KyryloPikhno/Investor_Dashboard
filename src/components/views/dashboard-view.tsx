@@ -1,5 +1,6 @@
 "use client"
 
+import InvestorSummary from "@/components/investor-summary"
 import SortableHeaderCell from "@/components/sortable-header-cell"
 import {
   ColumnType,
@@ -11,6 +12,8 @@ import {
 import { investmentsApi } from "@/lib/api-client"
 import { InvestorDataType, StatusStateType } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
+import { getSortDirectionLabel } from "@/utils/get-sort-direction-label"
+import { AnimatePresence, motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -40,9 +43,10 @@ export default function DashboardView() {
     fetchInvestorData()
   }, [filters, investorId])
 
-  if (status.loading) return <p>Loading...</p>
-  if (status.error) return <p>{status.error}</p>
-  if (!data?.summary) return <p>No investor summary found.</p>
+  if (status.loading) return <h2 className="font-bold p-8 w-full h-screen">Loading...</h2>
+  if (status.error) return <h2 className="font-bold p-8 w-full h-screen">{status.error}</h2>
+  if (!data?.summary)
+    return <h2 className="font-bold p-8 max-w-4xl mx-auto">No investor summary found.</h2>
 
   const { summary, investments } = data
 
@@ -54,35 +58,51 @@ export default function DashboardView() {
         prev.sortBy === column && prev.sortDirection === SORT.ASC ? SORT.DESC : SORT.ASC,
     }))
 
-  return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="text-4xl font-bold mb-8">Investor Dashboard</div>
+  const isResetFilter = filters.roiMin || filters.sortBy
+  const sortLabel =
+    TABLE_HEADERS.find((header) => header.key === filters.sortBy)?.label ?? filters.sortBy
 
-      <div className="mb-8">
-        <div className="text-2xl font-semibold mb-4">Summary</div>
-        <ul className="list-disc list-inside">
-          <li>Total Invested: {currencyFormatter.format(summary.total_invested_amount)}</li>
-          <li>Portfolio Value: {currencyFormatter.format(summary.portfolio_value)}</li>
-          <li>
-            Distributions Received: {currencyFormatter.format(summary.distributions_received)}
-          </li>
-          <li>
-            Outstanding Commitments: {currencyFormatter.format(summary.outstanding_commitments)}
-          </li>
-        </ul>
-      </div>
+  return (
+    <div className="w-full">
+      <InvestorSummary summary={summary} />
 
       <div>
-        <div className="text-2xl font-semibold mb-4">Investments</div>
+        <div className="flex mb-4 items-center justify-between h-20">
+          <div className="text-2xl font-semibold">Investments</div>
 
-        <button type="button" className="border" onClick={() => setFilters(FILTER_INITIAL_STATE)}>
-          Reset filter
-        </button>
+          <AnimatePresence>
+            {isResetFilter && (
+              <motion.div
+                key="filter-panel"
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-4"
+              >
+                <div className="font-medium">Filter:</div>
+                {filters.sortBy && (
+                  <div className="bg-gray-200 text-black p-2 rounded-full text-sm">
+                    Sort by: {sortLabel} (
+                    {getSortDirectionLabel(filters.sortBy, filters.sortDirection)})
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setFilters(FILTER_INITIAL_STATE)}
+                  className="bg-black rounded-full text-white p-4 hover:opacity-70 transition disabled:opacity-50 border border-white"
+                >
+                  Reset filter
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         {!investments.length ? (
           <p>No investments found.</p>
         ) : (
-          <table className="w-full table-auto border-collapse border border-gray-300" role="table">
+          <table className="w-full mb-16 table-auto border-collapse" role="table">
             <caption className="sr-only">Investor's investments overview</caption>
             <thead>
               <tr>
@@ -100,16 +120,14 @@ export default function DashboardView() {
             <tbody>
               {investments.map((inv) => (
                 <tr key={inv.id}>
-                  <td className="border border-gray-300 px-4 py-2">{inv.project_name}</td>
-                  <td className="border border-gray-300 px-4 py-2">{inv.token_class}</td>
-                  <td className="border border-gray-300 px-4 py-2">{inv.shares_owned}</td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-black px-4 py-2">{inv.project_name}</td>
+                  <td className="border border-black px-4 py-2">{inv.token_class}</td>
+                  <td className="border border-black px-4 py-2">{inv.shares_owned}</td>
+                  <td className="border border-black px-4 py-2">
                     {currencyFormatter.format(inv.market_value)}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {inv.roi_percent.toFixed(2)}%
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-black px-4 py-2">{inv.roi_percent.toFixed(2)}%</td>
+                  <td className="border border-black px-4 py-2">
                     {new Date(inv.next_distribution_date).toLocaleDateString()}
                   </td>
                 </tr>

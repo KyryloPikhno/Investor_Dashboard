@@ -15,21 +15,23 @@ export default function SortableHeaderCell({
 
   return (
     <th
-      className={twMerge(
-        "border border-gray-300 px-4 py-2",
-        isSortable && "cursor-pointer select-none",
-      )}
       onClick={() => isSortable && toggleSort(dataKey as ColumnType)}
+      className={twMerge(
+        "border border-b-0 px-4 py-2 relative",
+        isSortable && "cursor-pointer select-none",
+        isActiveSort && "bg-gray-200",
+      )}
     >
       {header}
+
       {isActiveSort && (
-        <span className="ml-1">
+        <div className="ml-1 absolute top-1/2 right-1 transform -translate-x-1/2 -translate-y-1/2">
           {filters.sortDirection === SORT.ASC ? (
             <TriangleIcon className="rotate-180" />
           ) : (
             <TriangleIcon />
           )}
-        </span>
+        </div>
       )}
     </th>
   )
