@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 Investor Dashboard
 
-## Getting Started
+A modern dashboard for investors to track their portfolio, view total investments, returns, and upcoming distributions. Built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Prisma ORM**.
 
-First, run the development server:
+---
 
+## 📸 Screenshots
+
+### 🔐 Login Page
+<img width="1680" alt="Снимок экрана 2025-05-18 в 12 09 06 PM" src="https://github.com/user-attachments/assets/fb9e61c5-562d-48b3-bf5c-0523eb351ddc" />
+
+### 📊 Dashboard
+1 <img width="1680" alt="Снимок экрана 2025-05-18 в 12 09 23 PM" src="https://github.com/user-attachments/assets/e0cbb645-c16f-46cd-9969-2bb06e5c92bc" />
+2 <img width="1680" alt="Снимок экрана 2025-05-18 в 12 09 30 PM" src="https://github.com/user-attachments/assets/1a0ba972-18ec-4de0-bab0-f6f417f304d1" />
+
+### ⏳ Loading State
+<img width="1680" alt="Снимок экрана 2025-05-18 в 12 11 24 PM" src="https://github.com/user-attachments/assets/6ced5322-b170-4ec9-99ce-6517b41f056b" />
+
+### 💀 Error State
+1 <img width="1680" alt="Снимок экрана 2025-05-18 в 12 14 32 PM" src="https://github.com/user-attachments/assets/0c08ab8c-c15f-4b2f-a84e-e0af41612eed" />
+2 <img width="1680" alt="Снимок экрана 2025-05-18 в 12 35 27 PM" src="https://github.com/user-attachments/assets/e5d1eec5-dcd8-4abf-960e-dc39ebe8ca65" />
+
+---
+
+## 🚀 Tech Stack
+
+| Technology     | Description                        |
+|----------------|------------------------------------|
+| **Next.js**    | Full-stack React framework         |
+| **TypeScript** | Type-safe JavaScript               |
+| **Tailwind CSS** | Utility-first CSS framework     |
+| **Prisma**     | Modern ORM for database access     |
+| **React Hook Form** | Form state management        |
+| **Zod**        | Schema validation for TypeScript   |
+| **Framer Motion** | Animation library              |
+| **ESLint + Prettier** | Code quality tools         |
+
+### 🧠 AI Tools Used
+
+- **ChatGPT**
+- **Cursor**
+
+---
+
+## 🚀 Getting Started
+Follow these steps to set up and run the project locally:
+
+1. Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/investor-dashboard.git
+cd investor-dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a .env File
+Create an environment file for your local configuration:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env
+Then update it with your local database settings. Here's an example:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+DATABASE_URL="postgresql://postgres:your_password@localhost:5432/investor_dashboard?schema=public"
+Make sure your PostgreSQL instance is running and accessible.
+```
 
-## Learn More
+3. Install Dependencies
+Use Yarn to install project dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Set Up the Database
+Run the following command to generate Prisma client, apply schema migrations, and seed the database:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+yarn db:setup
+This runs:
 
-## Deploy on Vercel
+yarn prisma:generate – Generates Prisma client
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+yarn prisma:migrate – Applies database migrations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+yarn seed – Seeds the database with example data
+```
+
+5. Start the Development Server
+```bash
+yarn dev
+Your app will be running at: http://localhost:3000
+```
+
