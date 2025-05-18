@@ -7,5 +7,8 @@ const apiClient = axios.create({
 
 export const investmentsApi = {
   getAll: () => apiClient.get(PATH.INVESTMENTS),
-  getById: (investorId: string) => apiClient.get(`${PATH.INVESTMENTS}/${investorId}`),
+  getById: (investorId: string, filters?: Record<string, any>) =>
+    apiClient.get(`${PATH.INVESTMENTS}/${investorId}`, {
+      params: filters,
+    }),
 }
