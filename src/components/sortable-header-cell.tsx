@@ -1,7 +1,8 @@
+import { twMerge } from "tailwind-merge"
+
 import { TriangleIcon } from "@/components/icons/triangle-icon"
 import { ColumnType, SORT } from "@/constants/common"
 import { SortableHeaderCellProps } from "@/types/common"
-import { twMerge } from "tailwind-merge"
 
 export default function SortableHeaderCell({
   header,
@@ -16,20 +17,22 @@ export default function SortableHeaderCell({
   return (
     <th
       className={twMerge(
-        "border border-gray-300 px-4 py-2",
+        "border border-b-0 px-4 py-2 relative",
         isSortable && "cursor-pointer select-none",
+        isActiveSort && "bg-gray-200",
       )}
       onClick={() => isSortable && toggleSort(dataKey as ColumnType)}
     >
       {header}
+
       {isActiveSort && (
-        <span className="ml-1">
+        <div className="ml-1 absolute top-1/2 right-1 transform -translate-x-1/2 -translate-y-1/2">
           {filters.sortDirection === SORT.ASC ? (
             <TriangleIcon className="rotate-180" />
           ) : (
             <TriangleIcon />
           )}
-        </span>
+        </div>
       )}
     </th>
   )

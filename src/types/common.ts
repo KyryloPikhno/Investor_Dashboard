@@ -1,8 +1,9 @@
+import { Investment, InvestorSummary } from "@prisma/client"
+import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react"
 import { z } from "zod"
 
-import { ColumnType } from "@/constants/common"
+import { ButtonVariant, ColumnType } from "@/constants/common"
 import { loginValidationSchema } from "@/validations/login-validation-schema"
-import { Investment, InvestorSummary } from "@prisma/client"
 
 export type InputFieldProps = {
   name: string
@@ -32,3 +33,19 @@ export type StatusStateType = {
   error: string | null
   loading: boolean
 }
+
+export type InvestorSummaryProps = {
+  loading: boolean
+  summary: {
+    portfolio_value: number
+    total_invested_amount: number
+    distributions_received: number
+    outstanding_commitments: number
+  } | null
+}
+
+export type ButtonProps = {
+  loading?: boolean
+  children: ReactNode
+  variant?: ButtonVariant
+} & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>

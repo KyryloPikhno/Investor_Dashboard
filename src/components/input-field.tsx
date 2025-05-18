@@ -1,9 +1,10 @@
 "use client"
 
-import { InputFieldProps } from "@/types/common"
 import _ from "lodash"
 import { useFormContext } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
+
+import { InputFieldProps } from "@/types/common"
 
 export default function InputField({ name }: InputFieldProps) {
   const {
@@ -15,14 +16,16 @@ export default function InputField({ name }: InputFieldProps) {
   const error = errors?.[name]?.message as string
 
   return (
-    <div className="mb-4">
-      <label className="block mb-2 text-sm font-medium">{label}</label>
+    <div className="mb-4 relative">
+      <label className="rounded-full block mb-1 text-sm font-medium absolute -top-2.5 left-8 bg-white px-2">
+        {label}
+      </label>
 
       <input
         type={name}
         {...register(name)}
         className={twMerge(
-          "w-full border rounded px-3 py-2",
+          "w-full border rounded-full p-4 shadow-md",
           error ? "border-red-500" : "border-gray-300",
         )}
       />

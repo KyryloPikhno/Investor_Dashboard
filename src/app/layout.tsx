@@ -1,4 +1,4 @@
-import "./globals.css"
+import "./styles/globals.css"
 
 import { Metadata } from "next"
 
@@ -16,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="p-4 flex items-center justify-center min-h-screen w-screen bg-gray-100">
+        {children}
+      </body>
     </html>
   )
 }
