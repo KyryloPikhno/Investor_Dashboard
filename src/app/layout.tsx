@@ -16,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="p-4 flex items-center justify-center min-h-screen w-screen bg-gray-100">
+      <body
+        className="p-4 flex items-center justify-center min-h-screen w-screen bg-gray-100"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

@@ -20,7 +20,7 @@ export default function InvestorSummary({ summary, loading }: InvestorSummaryPro
           <div className="flex gap-2 items-center h-6" key={label}>
             • {label}:
             <span className="font-medium w-24 h-hull h-6">
-              {loading ? <Skeleton /> : currencyFormatter.format(value)}
+              {loading ? <Skeleton /> : currencyFormatter.format(value ?? 0)}
             </span>
           </div>
         ))}
