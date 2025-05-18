@@ -1,44 +1,47 @@
 "use client"
 
 import SortableHeaderCell from "@/components/sortable-header-cell"
-import { ColumnType, INVESTOR_ID_QUERY_PARAM, SORT, TABLE_HEADERS } from "@/constants/common"
+import {
+  ColumnType,
+  FILTER_INITIAL_STATE,
+  INVESTOR_ID_QUERY_PARAM,
+  SORT,
+  TABLE_HEADERS,
+} from "@/constants/common"
 import { investmentsApi } from "@/lib/api-client"
-import { InvestorDataType } from "@/types/common"
+import { InvestorDataType, StatusStateType } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function DashboardView() {
+  const [status, setStatus] = useState<StatusStateType>({ error: null, loading: true })
   const [data, setData] = useState<InvestorDataType | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [filters, setFilters] = useState({
-    sortDirection: SORT.ASC,
-    roiMin: SORT.ASC,
-    sortBy: "",
-  })
-
+  const [filters, setFilters] = useState(FILTER_INITIAL_STATE)
   const searchParams = useSearchParams()
 
   const investorId = searchParams.get(INVESTOR_ID_QUERY_PARAM) as string
 
   useEffect(() => {
     async function fetchInvestorData() {
+      if (!data) {
+        setStatus({ error: null, loading: true })
+      }
+
       try {
         const response = await investmentsApi.getById(investorId, filters)
         setData(response.data)
+        setStatus({ error: null, loading: false })
       } catch {
-        setError("Something went wrong. Please try again later.")
-      } finally {
-        setLoading(false)
+        setStatus({ error: "Something went wrong. Please try again later.", loading: false })
       }
     }
 
     fetchInvestorData()
   }, [filters, investorId])
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>{error}</p>
+  if (status.loading) return <p>Loading...</p>
+  if (status.error) return <p>{status.error}</p>
   if (!data?.summary) return <p>No investor summary found.</p>
 
   const { summary, investments } = data
@@ -53,10 +56,10 @@ export default function DashboardView() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8">Investor Dashboard</h1>
+      <div className="text-4xl font-bold mb-8">Investor Dashboard</div>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Summary</h2>
+      <div className="mb-8">
+        <div className="text-2xl font-semibold mb-4">Summary</div>
         <ul className="list-disc list-inside">
           <li>Total Invested: {currencyFormatter.format(summary.total_invested_amount)}</li>
           <li>Portfolio Value: {currencyFormatter.format(summary.portfolio_value)}</li>
@@ -67,11 +70,16 @@ export default function DashboardView() {
             Outstanding Commitments: {currencyFormatter.format(summary.outstanding_commitments)}
           </li>
         </ul>
-      </section>
+      </div>
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Investments</h2>
-        {investments.length === 0 ? (
+      <div>
+        <div className="text-2xl font-semibold mb-4">Investments</div>
+
+        <button type="button" className="border" onClick={() => setFilters(FILTER_INITIAL_STATE)}>
+          Reset filter
+        </button>
+
+        {!investments.length ? (
           <p>No investments found.</p>
         ) : (
           <table className="w-full table-auto border-collapse border border-gray-300" role="table">
@@ -109,7 +117,7 @@ export default function DashboardView() {
             </tbody>
           </table>
         )}
-      </section>
+      </div>
     </div>
   )
 }

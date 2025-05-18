@@ -1,5 +1,3 @@
-import { Investment } from "@prisma/client"
-
 export enum ColumnType {
   RoiPercent = "roi_percent",
   NextDistributionDate = "next_distribution_date",
@@ -30,4 +28,10 @@ export const PUBLIC_PATHS = [PATH.LOGIN]
 export const SORT = {
   ASC: "asc",
   DESC: "desc",
+}
+
+export const FILTER_INITIAL_STATE = {
+  sortDirection: SORT.ASC,
+  roiMin: "",
+  sortBy: "",
 }

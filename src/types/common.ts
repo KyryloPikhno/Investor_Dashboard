@@ -27,3 +27,8 @@ export type SortableHeaderCellProps = {
   dataKey: string | undefined
   toggleSort: (column: ColumnType) => void
 }
+
+export type StatusStateType = {
+  error: string | null
+  loading: boolean
+}
