@@ -37,10 +37,6 @@ export default function DashboardView() {
 
   useEffect(() => {
     async function fetchInvestorData() {
-      if (!data) {
-        setStatus({ error: null, loading: true })
-      }
-
       try {
         const response = await investmentsApi.getById(investorId, filters)
         setData(response.data)
