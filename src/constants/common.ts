@@ -1,3 +1,10 @@
+import { Investment } from "@prisma/client"
+
+export enum ColumnType {
+  RoiPercent = "roi_percent",
+  NextDistributionDate = "next_distribution_date",
+}
+
 export const TOKEN_KEY = "token"
 
 export const PATH = {
@@ -18,4 +25,18 @@ export const TABLE_HEADERS = [
   "Next Distribution Date",
 ]
 
+export const HEADER_KEY_MAP: { [label: string]: keyof Investment } = {
+  "Project Name": "project_name",
+  "Token Class": "token_class",
+  "Shares Owned": "shares_owned",
+  "Market Value": "market_value",
+  "ROI %": "roi_percent",
+  "Next Distribution Date": "next_distribution_date",
+}
+
 export const PUBLIC_PATHS = [PATH.LOGIN]
+
+export const SORT = {
+  ASC: "asc",
+  DESC: "desc",
+}
