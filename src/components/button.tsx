@@ -4,7 +4,7 @@ import { ButtonVariant } from "@/constants/common"
 import { ButtonProps } from "@/types/common"
 
 const baseStyles =
-  "rounded-full p-4 transition hover:opacity-70 disabled:opacity-50 text-white text-center w-full"
+  "rounded-full p-4 cursor-pointer transition hover:opacity-70 disabled:opacity-50 text-white text-center w-full"
 
 export default function Button({
   children,
