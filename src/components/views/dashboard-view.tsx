@@ -17,6 +17,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
+const tdClassName = "border border-black px-4 py-2"
+
 export default function DashboardView() {
   const [status, setStatus] = useState<StatusStateType>({ error: null, loading: true })
   const [data, setData] = useState<InvestorDataType | null>(null)
@@ -120,14 +122,12 @@ export default function DashboardView() {
             <tbody>
               {investments.map((inv) => (
                 <tr key={inv.id}>
-                  <td className="border border-black px-4 py-2">{inv.project_name}</td>
-                  <td className="border border-black px-4 py-2">{inv.token_class}</td>
-                  <td className="border border-black px-4 py-2">{inv.shares_owned}</td>
-                  <td className="border border-black px-4 py-2">
-                    {currencyFormatter.format(inv.market_value)}
-                  </td>
-                  <td className="border border-black px-4 py-2">{inv.roi_percent.toFixed(2)}%</td>
-                  <td className="border border-black px-4 py-2">
+                  <td className={tdClassName}>{inv.project_name}</td>
+                  <td className={tdClassName}>{inv.token_class}</td>
+                  <td className={tdClassName}>{inv.shares_owned}</td>
+                  <td className={tdClassName}>{currencyFormatter.format(inv.market_value)}</td>
+                  <td className={tdClassName}>{inv.roi_percent.toFixed(2)}%</td>
+                  <td className={tdClassName}>
                     {new Date(inv.next_distribution_date).toLocaleDateString()}
                   </td>
                 </tr>
