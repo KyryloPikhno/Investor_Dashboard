@@ -32,3 +32,12 @@ export type StatusStateType = {
   error: string | null
   loading: boolean
 }
+
+export type InvestorSummaryProps = {
+  summary: {
+    portfolio_value: number
+    total_invested_amount: number
+    distributions_received: number
+    outstanding_commitments: number
+  }
+}
