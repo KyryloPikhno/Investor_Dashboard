@@ -1,8 +1,10 @@
 "use client"
 
+import Button from "@/components/button"
 import InvestorSummary from "@/components/investor-summary"
 import SortableHeaderCell from "@/components/sortable-header-cell"
 import {
+  ButtonVariant,
   ColumnType,
   FILTER_INITIAL_STATE,
   INVESTOR_ID_QUERY_PARAM,
@@ -89,13 +91,16 @@ export default function DashboardView() {
                     {getSortDirectionLabel(filters.sortBy, filters.sortDirection)})
                   </div>
                 )}
-                <button
-                  type="button"
-                  onClick={() => setFilters(FILTER_INITIAL_STATE)}
-                  className="bg-black rounded-full text-white p-4 hover:opacity-70 transition disabled:opacity-50 border border-white"
-                >
-                  Reset filter
-                </button>
+
+                <div>
+                  <Button
+                    type="button"
+                    variant={ButtonVariant.Solid}
+                    onClick={() => setFilters(FILTER_INITIAL_STATE)}
+                  >
+                    Reset filter
+                  </Button>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

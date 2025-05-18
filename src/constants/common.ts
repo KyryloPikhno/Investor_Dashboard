@@ -3,6 +3,11 @@ export enum ColumnType {
   NextDistributionDate = "next_distribution_date",
 }
 
+export enum ButtonVariant {
+  Solid = "solid",
+  Outline = "outline",
+}
+
 export const TOKEN_KEY = "token"
 
 export const PATH = {

@@ -1,5 +1,6 @@
 "use client"
 
+import Button from "@/components/button"
 import InputField from "@/components/input-field"
 import { INVESTOR_ID, INVESTOR_ID_QUERY_PARAM, TOKEN_KEY } from "@/constants/common"
 import { LoginFormType } from "@/types/common"
@@ -39,13 +40,9 @@ export default function LoginView() {
         <InputField name="email" />
         <InputField name="password" />
 
-        <button
-          className="w-full bg-black rounded-full text-white mt-4 p-4 hover:opacity-70 transition disabled:opacity-50"
-          disabled={isSubmitting}
-          type="submit"
-        >
-          {isSubmitting ? "Loading..." : "Login"}
-        </button>
+        <Button type="submit" loading={isSubmitting} disabled={isSubmitting}>
+          Login
+        </Button>
       </form>
     </FormProvider>
   )

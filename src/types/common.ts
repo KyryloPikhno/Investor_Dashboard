@@ -1,8 +1,9 @@
 import { z } from "zod"
 
-import { ColumnType } from "@/constants/common"
+import { ButtonVariant, ColumnType } from "@/constants/common"
 import { loginValidationSchema } from "@/validations/login-validation-schema"
 import { Investment, InvestorSummary } from "@prisma/client"
+import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react"
 
 export type InputFieldProps = {
   name: string
@@ -41,3 +42,9 @@ export type InvestorSummaryProps = {
     outstanding_commitments: number
   }
 }
+
+export type ButtonProps = {
+  loading?: boolean
+  children: ReactNode
+  variant?: ButtonVariant
+} & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
