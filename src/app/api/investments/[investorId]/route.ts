@@ -1,3 +1,4 @@
+import { ColumnType, SORT } from "@/constants/common"
 import prisma from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
@@ -15,12 +16,9 @@ export async function GET(req: Request, { params }: { params: { investorId: stri
       ? new Date(url.searchParams.get("distributionDateMin")!)
       : undefined
 
-    const sortBy = url.searchParams.get("sortBy") as
-      | "roi_percent"
-      | "next_distribution_date"
-      | undefined
+    const sortBy = url.searchParams.get("sortBy") as ColumnType | undefined
 
-    const sortDirection = url.searchParams.get("sortDirection") === "desc" ? "desc" : "asc"
+    const sortDirection = url.searchParams.get("sortDirection") === SORT.DESC ? SORT.DESC : SORT.ASC
 
     const whereFilter: any = { investor_id: investorId }
 
