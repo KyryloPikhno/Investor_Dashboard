@@ -40,3 +40,9 @@ export const FILTER_INITIAL_STATE = {
   sortBy: "",
   sortDirection: SORT.ASC,
 }
+
+export const ROW_COUNT = 15
+
+export const COLUMN_COUNT = 6
+
+export const tdClassName = "border border-black p-2 h-12 w-28"

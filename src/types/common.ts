@@ -35,12 +35,13 @@ export type StatusStateType = {
 }
 
 export type InvestorSummaryProps = {
+  loading: boolean
   summary: {
     portfolio_value: number
     total_invested_amount: number
     distributions_received: number
     outstanding_commitments: number
-  }
+  } | null
 }
 
 export type ButtonProps = {
