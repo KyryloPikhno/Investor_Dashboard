@@ -1,13 +1,7 @@
 "use client"
 
 import SortableHeaderCell from "@/components/sortable-header-cell"
-import {
-  ColumnType,
-  HEADER_KEY_MAP,
-  INVESTOR_ID_QUERY_PARAM,
-  SORT,
-  TABLE_HEADERS,
-} from "@/constants/common"
+import { ColumnType, INVESTOR_ID_QUERY_PARAM, SORT, TABLE_HEADERS } from "@/constants/common"
 import { investmentsApi } from "@/lib/api-client"
 import { InvestorDataType } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
@@ -84,13 +78,13 @@ export default function DashboardView() {
             <caption className="sr-only">Investor's investments overview</caption>
             <thead>
               <tr>
-                {TABLE_HEADERS.map((header) => (
+                {TABLE_HEADERS.map(({ label, key }) => (
                   <SortableHeaderCell
-                    key={header}
-                    header={header}
+                    key={label}
+                    dataKey={key}
+                    header={label}
                     filters={filters}
                     toggleSort={toggleSort}
-                    dataKey={HEADER_KEY_MAP[header]}
                   />
                 ))}
               </tr>
