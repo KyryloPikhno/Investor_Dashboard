@@ -8,19 +8,15 @@ export async function GET(
 ) {
   try {
     const { investorId } = await params
-    console.log("Investor ID:", investorId)
 
     const url = new URL(req.url)
     const roiMinRaw = url.searchParams.get("roiMin")
     const roiMin = roiMinRaw ? Number(roiMinRaw) : undefined
-    console.log("roiMin:", roiMin, "raw:", roiMinRaw)
 
     const distributionDateRaw = url.searchParams.get("distributionDateMin")
     const distributionDateMin = distributionDateRaw ? new Date(distributionDateRaw) : undefined
-    console.log("distributionDateMin:", distributionDateMin)
 
     const sortByRaw = url.searchParams.get("sortBy")
-    console.log("sortByRaw:", sortByRaw)
 
     const sortBy = (
       [
@@ -38,8 +34,6 @@ export async function GET(
     const sortDirectionRaw = url.searchParams.get("sortDirection")
     const sortDirection = sortDirectionRaw === "desc" ? "desc" : "asc"
 
-    console.log("sortBy:", sortBy, "sortDirection:", sortDirection)
-
     const whereFilter: any = { investor_id: investorId }
 
     if (roiMin !== undefined && !isNaN(roiMin)) {
@@ -55,9 +49,6 @@ export async function GET(
       orderBy[sortBy] = sortDirection
     }
 
-    console.log("whereFilter:", whereFilter)
-    console.log("orderBy:", orderBy)
-
     const investments = await prisma.investment.findMany({
       orderBy: Object.keys(orderBy).length > 0 ? orderBy : undefined,
       where: whereFilter,
@@ -72,15 +63,4 @@ export async function GET(
     console.error("API Error:", error)
     return NextResponse.json({ error: "Server Error" }, { status: 500 })
   }
-}
-
-export async function OPTIONS() {
-  const res = new NextResponse(null, { status: 204 })
-
-  res.headers.set("Access-Control-Allow-Origin", "*")
-  res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
-  res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type")
-  res.headers.set("Access-Control-Allow-Credentials", "true")
-
-  return res
 }

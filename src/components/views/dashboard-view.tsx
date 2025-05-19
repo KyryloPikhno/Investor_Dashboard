@@ -15,6 +15,7 @@ import {
   FILTER_INITIAL_STATE,
   INVESTOR_ID,
   INVESTOR_ID_QUERY_PARAM,
+  PATH,
   ROW_COUNT,
   SORT,
   TABLE_HEADERS,
@@ -36,15 +37,13 @@ export default function DashboardView() {
 
   useEffect(() => {
     async function fetchInvestorData() {
-      setStatus({ error: null, loading: true })
-
       try {
         const params = new URLSearchParams()
         if (filters.roiMin) params.append("roiMin", filters.roiMin.toString())
         if (filters.sortBy) params.append("sortBy", filters.sortBy)
         if (filters.sortDirection) params.append("sortDirection", filters.sortDirection)
 
-        const response = await fetch(`/api/investments/${investorId}?${params.toString()}`)
+        const response = await fetch(`${PATH.API_INVESTMENTS}/${investorId}?${params.toString()}`)
 
         if (!response.ok) {
           const errorData = await response.json()
