@@ -49,10 +49,8 @@ export async function GET(
 
     const res = NextResponse.json({ investments, summary })
 
-    res.headers.set(
-      "Access-Control-Allow-Origin",
-      "https://investor-dashboard-7ly2nku5l-kyrylopikhnos-projects.vercel.app",
-    )
+    res.headers.set("Access-Control-Allow-Origin", req.headers.get("origin") || "*")
+    res.headers.set("Access-Control-Allow-Credentials", "true")
     res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
     res.headers.set("Access-Control-Allow-Headers", "Content-Type")
 
