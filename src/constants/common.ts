@@ -11,6 +11,7 @@ export enum ButtonVariant {
 export const TOKEN_KEY = "token"
 
 export const PATH = {
+  API_INVESTMENTS: "/api/investments",
   INVESTMENTS: "/api/investments",
   LOGIN: "/login",
 }
@@ -28,7 +29,7 @@ export const TABLE_HEADERS = [
   { key: "next_distribution_date", label: "Next Distribution Date" },
 ] as const
 
-export const PUBLIC_PATHS = [PATH.LOGIN]
+export const PUBLIC_PATHS = [PATH.LOGIN, PATH.API_INVESTMENTS]
 
 export const SORT = {
   ASC: "asc",

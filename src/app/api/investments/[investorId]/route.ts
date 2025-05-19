@@ -51,7 +51,7 @@ export async function GET(
 
     res.headers.set("Access-Control-Allow-Origin", req.headers.get("origin") || "*")
     res.headers.set("Access-Control-Allow-Credentials", "true")
-    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
+    res.headers.set("Access-Control-Allow-Methods", "GET,OPTIONS")
     res.headers.set("Access-Control-Allow-Headers", "Content-Type")
 
     return res
@@ -59,4 +59,15 @@ export async function GET(
     console.error(error)
     return NextResponse.json({ error: "Server Error" }, { status: 500 })
   }
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Origin": "*",
+    },
+    status: 204,
+  })
 }
