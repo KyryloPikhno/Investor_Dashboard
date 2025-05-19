@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 
-export function middleware(req: NextRequest) {
+export function middleware() {
   // const token = req.cookies.get(TOKEN_KEY)?.value
   // const pathname = req.nextUrl.pathname
   // const isPublic = PUBLIC_PATHS.includes(pathname)
