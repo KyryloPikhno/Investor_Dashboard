@@ -33,7 +33,7 @@ export default function DashboardView() {
   const [filters, setFilters] = useState(FILTER_INITIAL_STATE)
   const searchParams = useSearchParams()
 
-  const investorId = searchParams.get(INVESTOR_ID_QUERY_PARAM) as string
+  const investorId = searchParams.get(INVESTOR_ID_QUERY_PARAM) ?? INVESTOR_ID
 
   useEffect(() => {
     async function fetchInvestorData() {
