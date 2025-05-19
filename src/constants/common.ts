@@ -12,7 +12,6 @@ export const TOKEN_KEY = "token"
 
 export const PATH = {
   API_INVESTMENTS: "/api/investments",
-  INVESTMENTS: "/api/investments",
   LOGIN: "/login",
 }
 
