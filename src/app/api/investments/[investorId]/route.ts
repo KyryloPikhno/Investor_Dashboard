@@ -49,10 +49,13 @@ export async function GET(
 
     const res = NextResponse.json({ investments, summary })
 
-    res.headers.set("Access-Control-Allow-Origin", req.headers.get("origin") || "*")
+    res.headers.set(
+      "Access-Control-Allow-Origin",
+      "https://investor-dashboard-rhb3u0hfw-kyrylopikhnos-projects.vercel.app",
+    )
+    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
+    res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type")
     res.headers.set("Access-Control-Allow-Credentials", "true")
-    res.headers.set("Access-Control-Allow-Methods", "GET,OPTIONS")
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type")
 
     return res
   } catch (error) {
@@ -62,12 +65,13 @@ export async function GET(
 }
 
 export async function OPTIONS() {
-  return new Response(null, {
-    headers: {
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Origin": "*",
-    },
-    status: 204,
-  })
+  const res = new NextResponse(null, { status: 204 })
+  res.headers.set(
+    "Access-Control-Allow-Origin",
+    "https://investor-dashboard-rhb3u0hfw-kyrylopikhnos-projects.vercel.app",
+  )
+  res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
+  res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type")
+  res.headers.set("Access-Control-Allow-Credentials", "true")
+  return res
 }
