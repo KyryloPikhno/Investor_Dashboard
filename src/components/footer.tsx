@@ -1,3 +1,5 @@
+"use client"
+
 export const Footer = () => {
   return (
     <div className="text-white h-75 bg-black flex flex-col justify-center p-4 rounded-lg">
