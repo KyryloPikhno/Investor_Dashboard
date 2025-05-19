@@ -20,7 +20,6 @@ import {
   TABLE_HEADERS,
   tdClassName,
 } from "@/constants/common"
-import { investmentsApi } from "@/lib/api-client"
 import { InvestorDataType, StatusStateType } from "@/types/common"
 import { currencyFormatter } from "@/utils/currency-formatter"
 import { getSortDirectionLabel } from "@/utils/get-sort-direction-label"
@@ -38,8 +37,12 @@ export default function DashboardView() {
   useEffect(() => {
     async function fetchInvestorData() {
       try {
-        const response = await investmentsApi.getById(investorId, filters)
-        setData(response.data)
+        // const response = await investmentsApi.getById(investorId, filters)
+        // setData(response.data)
+
+        await fetch("/api/investments/1234-5678?roiMin=&sortBy=&sortDirection=asc")
+          .then((res) => res.json())
+          .then((res) => setData(res))
         setStatus({ error: null, loading: false })
       } catch {
         setStatus({ error: "Something went wrong. Please try again later.", loading: false })
