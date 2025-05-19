@@ -4,15 +4,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "seed": "node --loader ts-node/esm prisma/seed.ts",
-    "db:setup": "yarn prisma:generate && yarn prisma:migrate && yarn seed"
+    "seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
