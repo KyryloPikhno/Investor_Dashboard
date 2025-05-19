@@ -36,16 +36,35 @@ export default function DashboardView() {
 
   useEffect(() => {
     async function fetchInvestorData() {
-      try {
-        // const response = await investmentsApi.getById(investorId, filters)
-        // setData(response.data)
+      setStatus({ error: null, loading: true })
 
-        await fetch("/api/investments/1234-5678?roiMin=&sortBy=&sortDirection=asc")
-          .then((res) => res.json())
-          .then((res) => setData(res))
+      try {
+        const params = new URLSearchParams()
+        if (filters.roiMin) params.append("roiMin", filters.roiMin.toString())
+        if (filters.sortBy) params.append("sortBy", filters.sortBy)
+        if (filters.sortDirection) params.append("sortDirection", filters.sortDirection)
+
+        const response = await fetch(`/api/investments/${investorId}?${params.toString()}`)
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || "Server error")
+        }
+
+        const data = await response.json()
+
+        if (!data || !Array.isArray(data.investments)) {
+          throw new Error("Invalid data format")
+        }
+
+        setData(data)
         setStatus({ error: null, loading: false })
-      } catch {
-        setStatus({ error: "Something went wrong. Please try again later.", loading: false })
+      } catch (err: any) {
+        setStatus({
+          error: err.message || "Something went wrong. Please try again later.",
+          loading: false,
+        })
+        setData(null)
       }
     }
 
