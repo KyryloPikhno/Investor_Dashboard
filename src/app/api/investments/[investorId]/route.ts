@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma"
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ investorId: string }> },
+  { params }: { params: { investorId: string } },
 ): Promise<NextResponse> {
   try {
     const { investorId } = await params
@@ -47,7 +47,16 @@ export async function GET(
       where: { investor_id: investorId },
     })
 
-    return NextResponse.json({ investments, summary })
+    const res = NextResponse.json({ investments, summary })
+
+    res.headers.set(
+      "Access-Control-Allow-Origin",
+      "https://investor-dashboard-7ly2nku5l-kyrylopikhnos-projects.vercel.app",
+    )
+    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type")
+
+    return res
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: "Server Error" }, { status: 500 })
