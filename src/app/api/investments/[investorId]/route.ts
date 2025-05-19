@@ -49,13 +49,9 @@ export async function GET(
 
     const res = NextResponse.json({ investments, summary })
 
-    res.headers.set(
-      "Access-Control-Allow-Origin",
-      "https://investor-dashboard-rhb3u0hfw-kyrylopikhnos-projects.vercel.app",
-    )
+    res.headers.set("Access-Control-Allow-Origin", "*")
     res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
     res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type")
-    res.headers.set("Access-Control-Allow-Credentials", "true")
 
     return res
   } catch (error) {
@@ -66,12 +62,10 @@ export async function GET(
 
 export async function OPTIONS() {
   const res = new NextResponse(null, { status: 204 })
-  res.headers.set(
-    "Access-Control-Allow-Origin",
-    "https://investor-dashboard-rhb3u0hfw-kyrylopikhnos-projects.vercel.app",
-  )
+
+  res.headers.set("Access-Control-Allow-Origin", "*")
   res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS")
   res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type")
-  res.headers.set("Access-Control-Allow-Credentials", "true")
+
   return res
 }
