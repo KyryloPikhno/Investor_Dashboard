@@ -31,6 +31,7 @@ export default function DashboardView() {
   const [status, setStatus] = useState<StatusStateType>({ error: null, loading: true })
   const [data, setData] = useState<InvestorDataType | null>(null)
   const [filters, setFilters] = useState(FILTER_INITIAL_STATE)
+
   const searchParams = useSearchParams()
 
   const investorId = searchParams.get(INVESTOR_ID_QUERY_PARAM) ?? INVESTOR_ID
