@@ -3,9 +3,12 @@ import { NextRequest, NextResponse } from "next/server"
 import { ColumnType, SORT } from "@/constants/common"
 import prisma from "@/lib/prisma"
 
-export async function GET(req: NextRequest, context: { params: { investorId: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ investorId: string }> },
+): Promise<NextResponse> {
   try {
-    const { investorId } = context.params
+    const { investorId } = await params
 
     const url = new URL(req.url)
 
