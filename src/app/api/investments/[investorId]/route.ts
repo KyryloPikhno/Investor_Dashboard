@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 import { ColumnType, SORT } from "@/constants/common"
 import prisma from "@/lib/prisma"
 
-export async function GET(req: Request, { params }: { params: { investorId: string } }) {
+export async function GET(req: NextRequest, context: { params: { investorId: string } }) {
   try {
-    const { investorId } = await params
+    const { investorId } = await context.params
 
     const url = new URL(req.url)
 
@@ -18,7 +18,6 @@ export async function GET(req: Request, { params }: { params: { investorId: stri
       : undefined
 
     const sortBy = url.searchParams.get("sortBy") as ColumnType | undefined
-
     const sortDirection = url.searchParams.get("sortDirection") === SORT.DESC ? SORT.DESC : SORT.ASC
 
     const whereFilter: any = { investor_id: investorId }
