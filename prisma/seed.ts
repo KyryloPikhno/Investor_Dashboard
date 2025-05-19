@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 
-import { INVESTOR_ID } from "@/constants/common"
 const prisma = new PrismaClient()
+
+const investor_id = "1234-5678"
 
 async function main() {
   await prisma.investorSummary.deleteMany()
@@ -10,7 +11,7 @@ async function main() {
   await prisma.investorSummary.create({
     data: {
       distributions_received: 12000,
-      investor_id: INVESTOR_ID,
+      investor_id,
       outstanding_commitments: 5000,
       portfolio_value: 175000,
       total_invested_amount: 150000,
@@ -20,7 +21,7 @@ async function main() {
   // Generate 15 investments dynamically
   const investments = Array.from({ length: 15 }, (_, i) => ({
     id: `inv-${String(i + 1).padStart(3, "0")}`,
-    investor_id: INVESTOR_ID,
+    investor_id,
     market_value: 20000 + i * 1000,
     next_distribution_date: new Date(2024, 5, 15 + i),
     project_name: `Project ${i + 1}`,
